@@ -1,6 +1,5 @@
 import os
-import cv2
-
+from cv2 import cv2
 from sklearn.cluster import KMeans, DBSCAN, MiniBatchKMeans
 from scipy import spatial
 from sklearn.preprocessing import StandardScaler
@@ -10,6 +9,7 @@ import numpy as np
 from tqdm import tqdm
 import argparse
 
+# Parsing Arguments of the script
 parser = argparse.ArgumentParser(description='Challenge presentation example')
 parser.add_argument('--data_path',
                     '-d',
@@ -32,7 +32,7 @@ parser.add_argument('--random',
                     help='Random run')
 args = parser.parse_args()
 
-
+# Objects that loads all images in a directory
 class Dataset(object):
     def __init__(self, data_path):
         self.data_path = data_path
@@ -53,11 +53,12 @@ class Dataset(object):
                     if c_name == 'distractor':
                         self.data_mapping[img_tmp] = -1
                     else:
-                        self.data_mapping[img_tmp] = int(c_name)
+                        self.data_mapping[img_tmp] = str(c_name)
 
         print('Loaded {:d} from {:s} images'.format(len(self.data_mapping.keys()),
                                                     self.data_path))
-
+    
+    # Returns 
     def get_data_paths(self):
         images = []
         classes = []
@@ -85,7 +86,7 @@ class FeatureExtractor(object):
     def get_descriptor(self, img_path):
         img = cv2.imread(img_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        kp, descs = self.feature_extractor.detectAndCompute(img, None)
+        _, descs = self.feature_extractor.detectAndCompute(img, None)
         return descs
 
 
@@ -165,7 +166,7 @@ def main():
     query_dataset = Dataset(data_path=query_path)
 
     # get training data and classes
-    training_paths, training_classes = training_dataset.get_data_paths()
+    training_paths, _ = training_dataset.get_data_paths()
 
     # we get validation gallery and query data
 
