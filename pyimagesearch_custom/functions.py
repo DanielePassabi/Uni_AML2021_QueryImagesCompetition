@@ -16,7 +16,10 @@ class ColorDescriptor:
 
     def describe(self, image):
         # convert the image to the HSV color space and initialize the features used to quantify the image
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        try:
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        except:
+            print("You can't see mee")
         features = []
 
         # grab the dimensions and compute the center of the image
@@ -182,3 +185,11 @@ def queryImage(img_path):
         predictions_list.append(r[1])
 
     return [img_path, predictions_list, distance_list]
+
+
+"""
+Given a path
+"""
+def cleanName(path):
+    start = path.rfind('/') +1
+    return path[start:-4]
