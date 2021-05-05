@@ -1,9 +1,12 @@
 # import the necessary packages
 import numpy as np
+import pandas as pd
 import cv2
 import imutils
 import glob
 import csv
+import re
+from tqdm import tqdm
 
 """
 Class to encapsulate all the necessary logic to extract the 3D HSV color histogram from the images
@@ -182,14 +185,96 @@ def queryImage(img_path):
 
     for r in results:
         distance_list.append(r[0])      # we save the distances, maybe we will need them
-        predictions_list.append(r[1])
+        predictions_list.append(cleanName(r[1]))
 
-    return [img_path, predictions_list, distance_list]
+    return [cleanName(img_path), predictions_list, distance_list]
+
+
+"""
+Runs the function queryImage on all the images present in the given directory
+
+Input:
+    > query_path: directory with all the images to query
+Output:
+    > dataframe with best 10 predictions
+"""
+def queryImageAll(query_path):
+
+    res_list = []
+    for imagePath in tqdm(glob.glob(query_path + "/*.jpg")):
+        tempRes = queryImage(imagePath)
+        res_list.append( [tempRes[0]] + tempRes[1])
+
+    res_df = pd.DataFrame(res_list, columns = ["Query", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
+    res_df.to_csv("results.csv", index=False)
+    return res_df
 
 
 """
 Given a path
 """
 def cleanName(path):
-    start = path.rfind('/') +1
+    start = path.rfind('\\') +1
     return path[start:-4]
+
+"""
+Removes all the numbers from a given string
+"""
+def removeNumbers(string):
+    pattern = r'[0-9]'
+    clean_string = re.sub(pattern, '', string)
+    return clean_string
+
+"""
+Provides the scores of a model 
+
+Input:
+    > csv with 10 predictions
+Output:
+    > list with
+      - top1 score
+      - top3 score
+      - top10 score
+"""
+def getModelScores(res_df):
+
+    # initialize matches
+    matches_top1 = 0
+    matches_top3 = 0
+    matches_top10 = 0
+
+    total_queries = len(res_df["Query"])
+
+    for i in range(total_queries):
+
+        # clean the query name
+        temp_query = removeNumbers(res_df["Query"][i])
+
+        # clean the predictions names
+        temp_pred_1 = removeNumbers(res_df["1"][i])      
+        temp_pred_2 = removeNumbers(res_df["2"][i])
+        temp_pred_3 = removeNumbers(res_df["3"][i])
+        temp_pred_4 = removeNumbers(res_df["4"][i])
+        temp_pred_5 = removeNumbers(res_df["5"][i])
+        temp_pred_6 = removeNumbers(res_df["6"][i])
+        temp_pred_7 = removeNumbers(res_df["7"][i])
+        temp_pred_8 = removeNumbers(res_df["8"][i])
+        temp_pred_9 = removeNumbers(res_df["9"][i])
+        temp_pred_10 = removeNumbers(res_df["10"][i])
+
+        preds_list = [temp_pred_1, temp_pred_2, temp_pred_3, temp_pred_4, temp_pred_5, temp_pred_6, temp_pred_7, temp_pred_8, temp_pred_9, temp_pred_10]
+
+        # case
+        if temp_query == preds_list[0]:
+            matches_top1 = matches_top1 + 1
+        if temp_query in preds_list[0:3]:
+            matches_top3 = matches_top3 + 1
+        if temp_query in preds_list:
+            matches_top10 = matches_top10 + 1
+
+    # Calculate the 3 scores
+    top1_score = matches_top1 / total_queries
+    top3_score = matches_top3 / total_queries
+    top10_score = matches_top10 / total_queries
+
+    return[top1_score, top3_score, top10_score]
