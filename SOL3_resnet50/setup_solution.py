@@ -24,10 +24,15 @@ SETTINGS
 gallery_path = "../dataset/validation"
 setup_dir_path = "setup_files"
 
-batch_size = 64
-img_size = 224
-num_epochs = 2
-n_neighbors = 10
+# ResNet Settings
+img_size = 256
+pooling = "avg"
+num_epochs = 20
+
+# ImageDataGenerator Settings
+batch_size = 128
+
+# NearestNeighbors Settings
 algorithm_for_NN = "ball_tree"
 metric_for_NN = "euclidean"
 
@@ -38,7 +43,7 @@ SCRIPT
 # Create `Resnet50` model without top layers so we get convolutional features as output instead of the image class probability.
 
 model = ResNet50(weights="imagenet", include_top=False,
-                 input_shape=(img_size, img_size, 3), pooling="max")
+                 input_shape=(img_size, img_size, 3), pooling=pooling)
 print("\n> Model ResNet50 Imported")
 
 img_gen = ImageDataGenerator(preprocessing_function=preprocess_input)
@@ -56,7 +61,7 @@ feature_list = model.predict(datagen, num_epochs)
 filenames = [gallery_path + "/" + s for s in datagen.filenames]
 
 print("\n> Fitting Nearest Neighbor Algorithm")
-neighbors = NearestNeighbors(n_neighbors=n_neighbors,
+neighbors = NearestNeighbors(n_neighbors=10,
                              algorithm=algorithm_for_NN,
                              metric=metric_for_NN)
 neighbors.fit(feature_list)

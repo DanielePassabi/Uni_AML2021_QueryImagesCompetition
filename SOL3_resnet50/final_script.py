@@ -17,7 +17,7 @@ SETTINGS
 
 query_path = "../dataset/validation/query"
 setup_dir_path = "setup_files"
-img_size = 224
+img_size = 256
 
 """
 SCRIPT
