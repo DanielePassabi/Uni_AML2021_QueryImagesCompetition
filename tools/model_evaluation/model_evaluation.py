@@ -63,7 +63,6 @@ def evaluate_model(df):
            compute_total_match(matches[2])]
     # Return the mean number of matches
     return res,worsts
-
 #%%
 def evaluate_all_models(print_wrong = False):
     dfs,dfs_names = import_results()

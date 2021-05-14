@@ -211,7 +211,7 @@ def queryImageAll(query_path):
 
 
 """
-Given a path
+Given a path, it terurns ony the name of a .jpg file
 """
 def cleanName(path):
     start = path.rfind('\\') +1
