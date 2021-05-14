@@ -26,7 +26,7 @@ def count_matches(strings,k=10):
     return 0
 
 def compute_total_match(matches):
-    return sum(matches)/len(matches)
+    return round(sum(matches)/len(matches),5)
 #%%
 
 # Evaluates the single model based on the df
