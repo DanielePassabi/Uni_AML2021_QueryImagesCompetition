@@ -10,11 +10,13 @@ import numpy as np
 # (default value: current directory)
 def import_results(path = os.path.abspath(os.getcwd())):
     results = []
-    for root, dirs, files in os.walk(path):
+    names = []
+    for _, _, files in os.walk(path):
         for file in files:
             if file.endswith(".csv"):
                 results.append(pd.read_csv(file))
-    return results
+                names.append(file)
+    return results,names
 
 # %%
 # Counts the matches for the single query
@@ -27,11 +29,23 @@ def count_matches(strings,k=10):
 
 def compute_total_match(matches):
     return round(sum(matches)/len(matches),5)
-#%%
 
+def find_worst(matches):
+    indices = [i for i, x in enumerate(matches) if x == 0]
+    return indices
+
+def get_worsts(worsts,df,top=1):
+    if top==1:
+        return df.iloc[worsts[0],:]
+    elif top==3:
+        return df.iloc[worsts[1],:]
+    else:        
+        return df.iloc[worsts[2],:]
+
+
+#%%
 # Evaluates the single model based on the df
 def evaluate_model(df):
-   
     # Divide strings and numbers
     r = re.compile("([a-zA-Z_]+)([0-9]+)") 
     matches = [[],[],[]]
@@ -41,21 +55,32 @@ def evaluate_model(df):
         matches[0].append(count_matches(query_cat,1))
         matches[1].append(count_matches(query_cat,3))
         matches[2].append(count_matches(query_cat,10))
+    worsts = [find_worst(matches[0]),
+              find_worst(matches[1]),
+              find_worst(matches[2])]
     res = [compute_total_match(matches[0]),
            compute_total_match(matches[1]),
            compute_total_match(matches[2])]
     # Return the mean number of matches
-    return res
+    return res,worsts
+
 #%%
-def evaluate_all_models():
-    dfs = import_results()
+def evaluate_all_models(print_wrong = False):
+    dfs,dfs_names = import_results()
+    wrong_matches = []
     accuracy = []
     for i in range(len(dfs)):
-        accuracy.append(evaluate_model(dfs[i]))
-        print("--- Solution "+str(i+1)+" ---")
+        res, worsts = evaluate_model(dfs[i])
+        accuracy.append(res)
+        print("\n--- Solution "+str(i+1)+": "+dfs_names[i]+" ---")
         print("> Accuracy top 1: "+str(accuracy[i][0]))
         print("> Accuracy top 3: "+str(accuracy[i][1]))
         print("> Accuracy top 10: "+str(accuracy[i][2]))
-    return accuracy
+        if print_wrong==True:
+            wrong_matches.append(get_worsts(worsts,dfs[i],top=1))
+    return res,wrong_matches
 #%%
-evaluate_all_models()
+res, wrong_matches = evaluate_all_models(print_wrong=True)
+
+# %%
+wrong_matches[0]
