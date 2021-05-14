@@ -42,7 +42,7 @@ def queryImageAll(query_path, img_size, model_resnet50, model_neighbors, filenam
         res_list.append( [cleanName(img_path)] + tempRes)
 
     res_df = pd.DataFrame(res_list, columns = ["Query", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
-    res_df.to_csv("../tools/model_evaluation/SOL3_results.csv", index=False)
+    res_df.to_csv("../tools/model_evaluation/SOL3_ResNet50_results.csv", index=False)
     return res_df
 
 

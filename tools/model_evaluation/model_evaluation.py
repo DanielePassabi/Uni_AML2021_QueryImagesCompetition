@@ -81,8 +81,8 @@ def evaluate_all_models(print_wrong = False):
         res, worsts = evaluate_model(dfs[i])
         accuracy.append(res)
         print("\n--- Solution "+str(i+1)+": "+dfs_names[i]+" ---")
-        print("> Accuracy top 1: "+str(accuracy[i][0]))
-        print("> Accuracy top 3: "+str(accuracy[i][1]))
+        print("> Accuracy top  1: "+str(accuracy[i][0]))
+        print("> Accuracy top  3: "+str(accuracy[i][1]))
         print("> Accuracy top 10: "+str(accuracy[i][2]))
         if worst_matches==True:
             wrong_matches.append(get_worsts(worsts,dfs[i],top=worst_top))

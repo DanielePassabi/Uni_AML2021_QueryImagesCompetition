@@ -3,7 +3,7 @@ from functions import *
 
 
 # SETTINGS
-gallery_path = "../dataset/training_augm"
+gallery_path = "../dataset/validation/gallery"
 gallery_features_path = "gallery_features.pkl"
 query_path = "../dataset/validation/query"
 query_features_path = "query_features.pkl"
