@@ -206,7 +206,7 @@ def queryImageAll(query_path):
         res_list.append( [tempRes[0]] + tempRes[1])
 
     res_df = pd.DataFrame(res_list, columns = ["Query", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
-    res_df.to_csv("SOL1_results.csv", index=False)
+    res_df.to_csv("../tools/model_evaluation/SOL1_results.csv", index=False)
     return res_df
 
 
