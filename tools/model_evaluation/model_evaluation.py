@@ -22,13 +22,16 @@ def count_matches(strings,k=10):
     i = 0
     for j in strings[1:(k+1)]:
         if strings[0] == j:
-            i+=1
-    return round(i/(len(strings)-1),2)
+            return 1
+    return 0
+
+def compute_total_match(matches):
+    return sum(matches)/len(matches)
 #%%
 
 # Evaluates the single model based on the df
 def evaluate_model(df):
-    
+   
     # Divide strings and numbers
     r = re.compile("([a-zA-Z_]+)([0-9]+)") 
     matches = [[],[],[]]
@@ -38,8 +41,11 @@ def evaluate_model(df):
         matches[0].append(count_matches(query_cat,1))
         matches[1].append(count_matches(query_cat,3))
         matches[2].append(count_matches(query_cat,10))
+    res = [compute_total_match(matches[0]),
+           compute_total_match(matches[1]),
+           compute_total_match(matches[2])]
     # Return the mean number of matches
-    return [np.mean(matches[0]),np.mean(matches[1]),np.mean(matches[2])]
+    return res
 #%%
 def evaluate_all_models():
     dfs = import_results()
