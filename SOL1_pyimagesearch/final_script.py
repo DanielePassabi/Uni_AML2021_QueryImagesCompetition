@@ -3,7 +3,7 @@ from functions import *
 import pandas as pd
 
 # SETTINGS
-gallery_path = "../dataset/validation/gallery"
+gallery_path = "../dataset/training_augm"
 gallery_features_path = "gallery_features.csv"
 query_path = "../dataset/validation/query"
 

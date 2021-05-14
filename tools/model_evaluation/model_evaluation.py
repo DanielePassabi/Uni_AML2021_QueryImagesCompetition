@@ -4,6 +4,13 @@ import os
 import re
 import numpy as np
 
+"""
+SETTINGS
+"""
+
+worst_matches = True
+worst_top = 1
+
 #%%
 
 # Import all csv files inside the specified path 
@@ -25,7 +32,7 @@ def count_matches(strings,k=10):
     for j in strings[1:(k+1)]:
         if strings[0] == j:
             return 1
-        elif strings[0] in j and "aug" in j:
+        elif strings[0] == j.split("_aug")[0] and "aug" in j:
             return 1
     return 0
 
@@ -77,8 +84,8 @@ def evaluate_all_models(print_wrong = False):
         print("> Accuracy top 1: "+str(accuracy[i][0]))
         print("> Accuracy top 3: "+str(accuracy[i][1]))
         print("> Accuracy top 10: "+str(accuracy[i][2]))
-        if print_wrong==True:
-            wrong_matches.append(get_worsts(worsts,dfs[i],top=1))
+        if worst_matches==True:
+            wrong_matches.append(get_worsts(worsts,dfs[i],top=worst_top))
     return res,wrong_matches
 #%%
 res, wrong_matches = evaluate_all_models(print_wrong=True)

@@ -67,7 +67,7 @@ def feature_extraction(dataset):
 
     if os.path.exists(dataset):
 
-        for filename in glob.glob(os.path.join(dataset, "*.jpg")):
+        for filename in tqdm(glob.glob(os.path.join(dataset, "*.jpg"))):
 
             # e.g. places/eiffel_tower.jpg => eiffel_tower
             img_name = os.path.basename(filename).split('.')[0]

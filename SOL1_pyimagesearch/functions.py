@@ -138,7 +138,7 @@ def extractFeaturesFromGallery(gallery_path, gallery_features_path):
     output = open(gallery_features_path, "w")
 
     # use glob to grab the image paths and loop over them
-    for imagePath in glob.glob(gallery_path + "/*.jpg"):
+    for imagePath in tqdm(glob.glob(gallery_path + "/*.jpg")):
 
         # extract the image ID (i.e. the unique filename) from the image path and load the image itself
         imageID = imagePath[imagePath.rfind("/") + 1:]
