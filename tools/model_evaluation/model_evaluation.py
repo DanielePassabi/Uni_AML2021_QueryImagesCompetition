@@ -25,6 +25,8 @@ def count_matches(strings,k=10):
     for j in strings[1:(k+1)]:
         if strings[0] == j:
             return 1
+        elif strings[0] in j and "aug" in j:
+            return 1
     return 0
 
 def compute_total_match(matches):
