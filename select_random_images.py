@@ -39,10 +39,7 @@ def pick_images_query(n_images=n_images_query):
     radices = [get_radix(x) for x in filenames]
     categories = list(set(radices)) 
     images_per_cat = math.ceil(n_images/len(categories))
-    print(len(categories))
-    print(images_per_cat)
     categories = categories * images_per_cat
-    print(len(categories))
     i=0
     for category in categories:
         if i < n_images:
@@ -54,7 +51,6 @@ def pick_images_query(n_images=n_images_query):
                     images_picked = images_to_pick
                 copy_images(images_picked,destDirectoryQuery) # copying images
                 i+=len(images_picked)
-                print(i)
     print("Added "+str(i)+" in the query dir.")
 
 #%%
@@ -70,5 +66,34 @@ def get_radix(s):
 # Creation of the gallery
 #create_gallery(destDirectoryGallery,n_images_gallery)
 # %%
-pick_images_query()
+# pick_images_query()
 # %%
+def pick_stressful_gallery(how_many_per_cat=1):
+    # Get categories
+    filenames = get_filenames_from_directory(dirpath+"/*.jpg")
+    radices = [get_radix(x) for x in filenames]
+    categories = set(radices)
+    categories.remove("distractor")
+    i=0 
+    for category in categories:
+        if i <= n_images_gallery:
+            # Pick one random image per category
+            images_to_pick = [filename for filename in os.listdir(dirpath) if filename.startswith(category)]
+            images_picked = random.sample(images_to_pick, how_many_per_cat)
+            
+            # Copying the image
+            copy_images(images_picked,destDirectoryGallery) 
+            i+=1
+    
+    # Pick distractor images
+    images_to_pick = [filename for filename in os.listdir(dirpath) if filename.startswith("distractor")]
+    if len(images_to_pick) >= n_images_gallery:
+        images_picked = random.sample(images_to_pick, n_images_gallery-i)
+    else:
+        images_picked = random.sample(images_to_pick, len(images_to_pick))
+    copy_images(images_picked,destDirectoryGallery) 
+
+#%%
+pick_stressful_gallery()
+#%%
+pick_images_query()
