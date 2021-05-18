@@ -3,6 +3,7 @@ import shutil, random, os
 import glob
 import re
 import sys
+import math
 
 #%%
 # Starting directory
@@ -13,8 +14,8 @@ destDirectoryGallery = 'dataset/validation/gallery'
 destDirectoryQuery = 'dataset/validation/query'
 
 # Number of images to pick
-n_images_gallery = 2000
-n_images_query = 100
+n_images_gallery = 10000
+n_images_query = 200
 
 # Pick images for the gallery
 def pick_images_gallery():
@@ -36,15 +37,25 @@ def create_gallery(destDirectory,n_images):
 def pick_images_query(n_images=n_images_query):
     filenames = get_filenames_from_directory(destDirectoryGallery+"/*.jpg")
     radices = [get_radix(x) for x in filenames]
-    radices = set(radices)
+    categories = list(set(radices)) 
+    images_per_cat = math.ceil(n_images/len(categories))
+    print(len(categories))
+    print(images_per_cat)
+    categories = categories * images_per_cat
+    print(len(categories))
     i=0
-    while i<n_images:
-        image = random.sample(os.listdir(dirpath), 1)
-        image_radix = get_radix(image[0])
-        if image_radix in radices and image_radix != "distractor" and image not in os.listdir(destDirectoryGallery):
-            copy_images(image,destDirectoryQuery)
-            i+=1
-    print("Added "+str(n_images)+" in the query dir.")
+    for category in categories:
+        if i < n_images:
+            if not category.startswith("distractor"):
+                images_to_pick = [filename for filename in os.listdir(dirpath) if filename.startswith(category)]
+                if len(images_to_pick) >= images_per_cat:
+                    images_picked = random.sample(images_to_pick, images_per_cat)
+                else:
+                    images_picked = images_to_pick
+                copy_images(images_picked,destDirectoryQuery) # copying images
+                i+=len(images_picked)
+                print(i)
+    print("Added "+str(i)+" in the query dir.")
 
 #%%
 def get_filenames_from_directory(directory):
@@ -57,8 +68,7 @@ def get_radix(s):
 
 #%%
 # Creation of the gallery
-create_gallery(destDirectoryGallery,n_images_gallery)
+#create_gallery(destDirectoryGallery,n_images_gallery)
 # %%
 pick_images_query()
-#%%
-get_radix("yellow_building18_aug3.jpg")
+# %%
