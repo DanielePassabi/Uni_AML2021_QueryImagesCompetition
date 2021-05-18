@@ -1,6 +1,6 @@
 #%%
 import os
-path = 'validation/query/'
+path = 'C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/dataset/new_data/'
 files = os.listdir(path)
 #%%
 
