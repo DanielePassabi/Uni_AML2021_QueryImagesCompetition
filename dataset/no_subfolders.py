@@ -2,8 +2,8 @@ import shutil
 import os
 import glob
 
-source_dir = 'validation_new'
-target_dir = 'validation'
+source_dir = 'new_data'
+target_dir = 'new_data_no_sub'
     
 file_names = os.listdir(source_dir)
 
