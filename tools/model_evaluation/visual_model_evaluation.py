@@ -8,15 +8,17 @@ import glob
 SETTINGS
 """
 
-res_dir = "test_03_hard_gallery"
-images_abs_path = "C:/Users/danyp/Documents/Programmazione/AML_Competition_2021/AML_Competition_2021/dataset/training_augm/"  # dany
+# Set abs path as default in the function
+res_dir = "test_07_no_aug_in_query"
+images_abs_path_dany = "C:/Users/danyp/Documents/Programmazione/AML_Competition_2021/AML_Competition_2021/dataset/training_augm/"  # dany
+images_abs_path_au = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/dataset/training_augm/"  # aurora
 
 
 """
 FUNCTIONS
 """
 
-def save_df_as_html_table(df, df_name):
+def save_df_as_html_table(df, df_name, images_abs_path=images_abs_path_au):
 
     html_inj = '<img src="{path_img}" width="130" height="130" title="{img_name}"> <figcaption style="font-size: xx-small;">  {img_name}</figcaption>'
 

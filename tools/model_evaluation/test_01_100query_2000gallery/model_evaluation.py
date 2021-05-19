@@ -10,7 +10,8 @@ SETTINGS
 
 worst_matches = True
 worst_top = 1
-path_results = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/tools/model_evaluation/test_01_100query_2000gallery"
+directory = "test_05_2_per_cat_gal_1_per_cat_query"
+path_results = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/tools/model_evaluation/"+directory
 #%%
 
 # Import all csv files inside the specified path 
@@ -24,7 +25,6 @@ def import_results(path = os.path.abspath(path_results)):
                 results.append(pd.read_csv(file))
                 names.append(file)
     return results,names
-
 # %%
 # Counts the matches for the single query
 def count_matches(strings,k=10):
@@ -92,5 +92,3 @@ res, wrong_matches = evaluate_all_models(print_wrong=True)
 
 # %%
 wrong_matches[0]
-#%%
-import_results()

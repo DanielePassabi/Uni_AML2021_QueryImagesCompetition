@@ -9,22 +9,23 @@ SETTINGS
 """
 
 worst_matches = True
-worst_top = 1
+worst_top = 10
+directory = "test_07_no_aug_in_query"
+path_results = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/tools/model_evaluation/"+directory
 #%%
 
 # Import all csv files inside the specified path 
 # (default value: current directory)
-def import_results(path = os.path.abspath(os.getcwd())):
+def import_results(path = os.path.abspath(path_results)):
     results = []
     names = []
     for _, _, files in os.walk(path):
         for file in files:
             if file.endswith(".csv"):
-                results.append(pd.read_csv(file))
+                results.append(pd.read_csv(os.path.join(path,file)))
                 names.append(file)
     return results,names
-
-# %%
+#%%
 # Counts the matches for the single query
 def count_matches(strings,k=10):
     i = 0
@@ -87,9 +88,6 @@ def evaluate_all_models(print_wrong = False):
             wrong_matches.append(get_worsts(worsts,dfs[i],top=worst_top))
     return res,wrong_matches
 #%%
-res, wrong_matches = evaluate_all_models(print_wrong=True)
-
+_,worsts = evaluate_all_models(print_wrong=True)
 # %%
-wrong_matches[0]
-#%%
-wrong_matches[2]
+worsts[1]
