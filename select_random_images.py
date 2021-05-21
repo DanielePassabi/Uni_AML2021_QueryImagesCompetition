@@ -8,14 +8,14 @@ import math
 #%%
 # Starting directory
 dirpath_query = 'dataset/training'
-dirpath_gallery = 'dataset/training_augm'
+dirpath_gallery = 'dataset/training'
 
 # Destination directory
 destDirectoryGallery = 'dataset/validation/gallery'
 destDirectoryQuery = 'dataset/validation/query'
 
 # Number of images to pick
-n_images_gallery = 1000
+n_images_gallery = 5000
 n_images_query = 50
 
 # Pick images for the gallery
@@ -81,7 +81,10 @@ def pick_stressful_gallery(how_many_per_cat=1):
         if i <= n_images_gallery:
             # Pick one random image per category
             images_to_pick = [filename for filename in os.listdir(dirpath_gallery) if filename.startswith(category)]
-            images_picked = random.sample(images_to_pick, how_many_per_cat)
+            if how_many_per_cat > len(images_to_pick):
+                images_picked = images_to_pick
+            else:
+                images_picked = random.sample(images_to_pick, how_many_per_cat)
             
             # Copying the image
             copy_images(dirpath_gallery, images_picked,destDirectoryGallery) 
@@ -96,7 +99,7 @@ def pick_stressful_gallery(how_many_per_cat=1):
     copy_images(dirpath_gallery,images_picked,destDirectoryGallery) 
 
 #%%
-#pick_stressful_gallery(how_many_per_cat=3)
+pick_stressful_gallery(how_many_per_cat=10)
 #%%
 pick_images_query()
 # %%
