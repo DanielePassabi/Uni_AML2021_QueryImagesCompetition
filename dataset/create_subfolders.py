@@ -15,6 +15,7 @@ dirpath = 'validation/gallery'
 destDirectoryGallery = 'validation_subfolders/gallery/'
 
 
+
 """
 FUNCTIONS
 """
