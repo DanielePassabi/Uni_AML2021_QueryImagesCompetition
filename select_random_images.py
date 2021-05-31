@@ -99,7 +99,7 @@ def pick_stressful_gallery(how_many_per_cat=1):
     copy_images(dirpath_gallery,images_picked,destDirectoryGallery) 
 
 #%%
-pick_stressful_gallery(how_many_per_cat=10)
+pick_stressful_gallery(how_many_per_cat=3)
 #%%
 pick_images_query()
 # %%

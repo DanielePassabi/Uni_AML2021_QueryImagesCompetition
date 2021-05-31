@@ -9,10 +9,10 @@ import re
 SETTINGS
 """
 # Starting directory
-dirpath = 'validation/gallery'
+dirpath = 'training_augm'
 
 # Destination directory
-destDirectoryGallery = 'validation_subfolders/gallery/'
+destDirectoryGallery = 'training_augm_subfolders/'
 
 
 
