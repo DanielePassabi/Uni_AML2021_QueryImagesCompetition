@@ -12,6 +12,7 @@ SETTINGS
 res_dir = "test_10_simple_test_pre_competition"
 images_abs_path = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/dataset/training_augm/"  # aurora
 images_abs_path = "C:/Users/Daniele/Documents/Programmazione/Github/AML_Competition_2021/dataset/training_augm/"  # dany
+images_abs_path = "C:/Users/elypa/AML_Competition_2021/dataset/training_augm/"  # ely
 
 
 """
