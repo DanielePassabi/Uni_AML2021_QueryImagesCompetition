@@ -10,7 +10,7 @@ SETTINGS
 
 worst_matches = True
 worst_top = 10
-directory = "test_06_3_per_gallery"
+directory = "test_09_training_and_not"
 path_results = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/tools/model_evaluation/"+directory
 #%%
 
