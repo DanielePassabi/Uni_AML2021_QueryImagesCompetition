@@ -10,10 +10,10 @@ SETTINGS
 
 worst_matches = True
 worst_top = 10
-directory = "test_10_simple_test_pre_competition"
+directory = "test_11_final_test_venv"
 path_results = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/tools/model_evaluation/"+directory
-path_results = "C:/Users/Daniele/Documents/Programmazione/Github/AML_Competition_2021/tools/model_evaluation/"+directory
-path_results = "C:/Users/elypa/AML_Competition/tools/model_evaluation/"+directory
+#path_results = "C:/Users/Daniele/Documents/Programmazione/Github/AML_Competition_2021/tools/model_evaluation/"+directory
+#path_results = "C:/Users/elypa/AML_Competition/tools/model_evaluation/"+directory
 
 #%%
 

@@ -9,10 +9,10 @@ SETTINGS
 """
 
 # Set abs path as default in the function
-res_dir = "test_10_simple_test_pre_competition"
+res_dir = "test_11_final_test_venv"
 images_abs_path = "C:/Users/auror/OneDrive/Documenti/GitHub/AML_Competition_2021/dataset/training_augm/"  # aurora
-images_abs_path = "C:/Users/Daniele/Documents/Programmazione/Github/AML_Competition_2021/dataset/training_augm/"  # dany
-images_abs_path = "C:/Users/elypa/AML_Competition_2021/dataset/training_augm/"  # ely
+#images_abs_path = "C:/Users/Daniele/Documents/Programmazione/Github/AML_Competition_2021/dataset/training_augm/"  # dany
+#images_abs_path = "C:/Users/elypa/AML_Competition_2021/dataset/training_augm/"  # ely
 
 
 """

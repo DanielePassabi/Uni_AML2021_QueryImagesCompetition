@@ -15,7 +15,7 @@ destDirectoryGallery = 'dataset/validation/gallery'
 destDirectoryQuery = 'dataset/validation/query'
 
 # Number of images to pick
-n_images_gallery = 5000
+n_images_gallery = 500
 n_images_query = 50
 
 # Pick images for the gallery
@@ -39,20 +39,19 @@ def pick_images_query(n_images=n_images_query):
     filenames = get_filenames_from_directory(destDirectoryGallery+"/*.jpg")
     radices = [get_radix(x) for x in filenames]
     categories = list(set(radices))
-    print(categories) 
+    categories.remove("distractor")
     images_per_cat = math.ceil(n_images/len(categories))
     categories = categories * images_per_cat    
     i=0
     for category in categories:
         if i < n_images:
-            if not category.startswith("distractor"):
-                images_to_pick = [filename for filename in os.listdir(dirpath_query) if filename.startswith(category)]
-                if len(images_to_pick) >= images_per_cat:
-                    images_picked = random.sample(images_to_pick, images_per_cat)
-                else:
-                    images_picked = images_to_pick
-                copy_images(dirpath_query, images_picked,destDirectoryQuery) # copying images
-                i+=len(images_picked)
+            images_to_pick = [filename for filename in os.listdir(dirpath_query) if filename.startswith(category) and filename not in filenames]
+            if len(images_to_pick) >= images_per_cat:
+                images_picked = random.sample(images_to_pick, images_per_cat)
+            else:
+                images_picked = images_to_pick
+            copy_images(dirpath_query, images_picked,destDirectoryQuery) # copying images
+            i+=len(images_picked)
     print("Added "+str(i)+" in the query dir.")
 
 #%%
@@ -88,11 +87,11 @@ def pick_stressful_gallery(how_many_per_cat=1):
             
             # Copying the image
             copy_images(dirpath_gallery, images_picked,destDirectoryGallery) 
-            i+=1
+            i+=len(images_picked)
     
     # Pick distractor images
     images_to_pick = [filename for filename in os.listdir(dirpath_gallery) if filename.startswith("distractor")]
-    if len(images_to_pick) >= n_images_gallery:
+    if len(images_to_pick) >= (n_images_gallery-i):
         images_picked = random.sample(images_to_pick, n_images_gallery-i)
     else:
         images_picked = random.sample(images_to_pick, len(images_to_pick))
