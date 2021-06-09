@@ -90,7 +90,7 @@ Despite it is simpler than the previous one, this solution tends to perform bett
 
 #### Solution 3: ResNet50
 
-First of all, a pretrained ResNet50 model is created. Then, we give pass to the model the gallery images, so that it can extract the features of all the images. Secondly, a K-nearest neighbour model is used to find the 10 closest images to the query set. This search is conducted through `queryImageAll()`, which:
+First of all, a pretrained ResNet50 model is created. Then, we pass the gallery images to the model so that it can extract the features of all of them. Secondly, a K-nearest neighbour model is used to find the 10 closest images to the query set. This search is conducted through `queryImageAll()`, which:
 
 1. Imports all query images;
 2. Preprocess them and makes the ResNet model predict them;
@@ -100,7 +100,7 @@ This appears to be the best solution among all those proposed, despite the follo
 
 #### Solution 4: ResNet152
 
-This solution is similar to the previous one,except for the ResNet model chosen: we decided to give a try to ResNet152, which has more layers, thinking it would have provided better results. Actually, they are quite resembling the antecedent model. 
+This solution is similar to the previous one, except for the ResNet model chosen: we decided to give a try to ResNet152, which has more layers, thinking it would have provided better results. Actually, they are quite resembling the antecedent model. 
 
 #### Solution 5: ResNet + training 
 
