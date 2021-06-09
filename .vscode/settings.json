@@ -1,3 +1,11 @@
 {
-    "python.pythonPath": "venv\\Scripts\\python.exe"
+    "spellright.language": [
+        "en",
+        "it"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ]
 }

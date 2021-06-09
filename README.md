@@ -36,7 +36,7 @@ The following sections will describe the structure of the folders inside the pro
 The dataset folder contains:
 
 - training folder with the initial images;
-- training_augm, with the initial dataset and the augmented version of them;
+- training_augm, with the initial dataset images and the augmented version of them;
 - validation, which is empty and will be filled when needed with personalized or random gallery and query set. 
 
 `create_subfolders.py` is a script for inserting all images with the same radix name (i.e. same category) inside the same folder, named after the radix name itself. 
@@ -53,7 +53,7 @@ The tools directory contains:
 - `data_augmentation.ipynb`, for creating new images from the original ones, by rotating, shifting and increasing/decreasing the brightness and the zoom;
 - model evaluation contains all the csv files with the results of various testing. In particular, it contains two interesting scripts: `model_evaluation.py` and `visual_model_evaluation.py`.
 
-**Model evaluation** passes throughall the csv files inside a folder and evaluates the accuracy of the model: for each query, the accuracy is 1 if there is at least one match in the top k results. The algorithm provides this accuracy in terms of top 1, 3 and 10. Moreover, it returns a dataframe with the completely wrong matches in the top 10, so we can better understand the motivations underlying the model.
+**Model evaluation** passes through all the csv files inside a folder and evaluates the accuracy of the model: for each query, the accuracy is 1 if there is at least one match in the top k results. The algorithm provides this accuracy in terms of top 1, 3 and 10. Moreover, it returns a dataframe with the completely wrong matches in the top 10, so we can better understand in which images the model perform worse.
 
 _For instance, in some cases, the model confused two similar palaces because the garden in the query image was missing, while there was in the gallery)._
 
@@ -73,7 +73,7 @@ For each solution, there are two scripts, plus eventual additional files:
 This first solution is based on two classes and two functions:
 
 - ColorDescriptor, which creates a feature vector of images, dividing each of them into five main areas: the four corners and an elliptical form of the center;
-- Searcher, which compares the feature extracted from the query image with the ones already analyzed from the gallery (and saved in `gallery_features.csv`);
+- Searcher, which compares the feature extracted from the query image with the ones already analysed from the gallery (and saved in `gallery_features.csv`);
 - `extractFeaturesFromGallery()` creates a descriptor and extracts the features for all images in the gallery, then saved;
 - `queryImage()` extracts the feature from the single query image and compares it with all the gallery feature. Then `queryAllImages()` performs this function for all query images. 
 
@@ -90,7 +90,7 @@ Despite it is simpler than the previous one, this solution tends to perform bett
 
 #### Solution 3: ResNet50
 
-First of all, a pretrained ResNet50 model is created and then trained on the gallery set. Secondly, a K-nearest neighbour model is used to find the 10 closest images to the query set. This search is conducted through `queryImageAll()`, which:
+First of all, a pretrained ResNet50 model is created. Then, we give pass to the model the gallery images, so that it can extract the features of all the images. Secondly, a K-nearest neighbour model is used to find the 10 closest images to the query set. This search is conducted through `queryImageAll()`, which:
 
 1. Imports all query images;
 2. Preprocess them and makes the ResNet model predict them;
@@ -102,11 +102,11 @@ This appears to be the best solution among all those proposed, despite the follo
 
 This solution is similar to the previous one,except for the ResNet model chosen: we decided to give a try to ResNet152, which has more layers, thinking it would have provided better results. Actually, they are quite resembling the antecedent model. 
 
-#### Solution 5:
+#### Solution 5: ResNet + training 
 
 The only missing tassel to the past two solutions is the training step. Since ResNets are pretrained models, we did not trained them on the training dataset of images. This solution tries to train the model for completeness, since results are reached till now are quite high, and to make our model more accurate on building recognition. 
 
-Unfortunately, the model performs worst than the past two, both in terms of accuracy and computational time. 
+Unfortunately, the model performs worse than the past two, both in terms of accuracy and computational time. 
 
 ### Additional scripts
 
