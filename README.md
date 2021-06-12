@@ -5,7 +5,7 @@ This project aims to create an algorithm able to match the images in a query set
 
 ## Create a virtual environment
 
-It is highly suggested to create a virtual environment and to install the packages contained inside `requirements.txt`. In order to create it, execute from command line:
+It is highly suggested to create a virtual environment and to install the packages contained inside `requirements.txt`. In order to create it, execute from the command line:
 
 ```
 virtualenv venv
@@ -79,18 +79,18 @@ This first solution is based on two classes and two functions:
 
 This solution is quite simple and might be helpful for small datasets, but whenever the number of images in the gallery increases (let's say over 1,000), it takes too long to finish, because it has to compare each query image with all those contained in the gallery set. 
 
-#### Solution 2: Match descriptors with different descriptor
+#### Solution 2: Match descriptors with a different descriptor
 
 This solution is similar to the previous one, with some differences:
 
 - it saves the features of query and gallery in pickle format and then performs the search;
 - the descriptor is simpler, since it converts all images to the same color space and then computes the histogram for each of them. 
 
-Despite it is simpler than the previous one, this solution tends to perform better, but still it is time consuming for big datasets. 
+Despite it is simpler than the previous one, this solution tends to perform better, but still it is time-consuming for big datasets. 
 
 #### Solution 3: ResNet50
 
-First of all, a pretrained ResNet50 model is created. Then, we pass the gallery images to the model so that it can extract the features of all of them. Secondly, a K-nearest neighbour model is used to find the 10 closest images to the query set. This search is conducted through `queryImageAll()`, which:
+First of all, a pre-trained ResNet50 model is created. Then, we pass the gallery images to the model so that it can extract the features of all of them. Secondly, a K-nearest neighbour model is used to find the 10 closest images to the query set. This search is conducted through `queryImageAll()`, which:
 
 1. Imports all query images;
 2. Preprocess them and makes the ResNet model predict them;
@@ -104,7 +104,7 @@ This solution is similar to the previous one, except for the ResNet model chosen
 
 #### Solution 5: ResNet + training 
 
-The only missing tassel to the past two solutions is the training step. Since ResNets are pretrained models, we did not trained them on the training dataset of images. This solution tries to train the model for completeness, since results are reached till now are quite high, and to make our model more accurate on building recognition. 
+The only missing tassel to the past two solutions is the training step. Since ResNets are pre-trained models, we did not train them on the training dataset of images. This solution tries to train the model for completeness, since results are reached till now are quite high, and to make our model more accurate on building recognition. 
 
 Unfortunately, the model performs worse than the past two, both in terms of accuracy and computational time. 
 
@@ -113,12 +113,12 @@ Unfortunately, the model performs worse than the past two, both in terms of accu
 The remaining two scripts in the main folder are:
 
 - `select_random_images.py`: this script randomly generates the gallery and query folder from the starting training set.
-- `submit_results.py`: script for converting csv files of matchings to a json format, which is requested to be sent in order to submit competition results. 
+- `submit_results.py`: script for converting csv files of matchings to a JSON format, which is requested to be sent in order to submit competition results. 
 
 #### Select random images
 
 In order to create the gallery, `create_gallery()` simply selects randomically images and copies them in the gallery folder. The alternative to this simple implementation is `pick_stressful_gallery()`, which selects a specified number of images for each category and then inserts the remaining images to select from the distractor class. In this way, we can see whether the model recognizes or not a limited set of related images from a big set of distractors. 
 
-THe query is created through `pick_images_query()`, which takes, for each category one or more images, such that they do not belong to the distractor class and they do not show in the gallery class. 
+The query is created through `pick_images_query()`, which takes, for each category one or more images, such that they do not belong to the distractor class and they do not show in the gallery class. 
 
 This algorithm revealed to be useful for evaluating and comparing all the solutions proposed. 
