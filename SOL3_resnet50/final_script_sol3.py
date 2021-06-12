@@ -5,9 +5,11 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 from sklearn.neighbors import NearestNeighbors
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+from tensorflow.keras.applications.resnet_v2 import ResNet152V2, preprocess_input
+
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from functions import *
-
+from sklearn.preprocessing import StandardScaler
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -20,21 +22,21 @@ print("> Libraries Imported")
 SETTINGS
 """
 
-gallery_path = "../dataset/validation"
-query_path = "../dataset/validation/query"
+gallery_path = "../dataset/test"
+query_path = "../dataset/test/query"
 setup_dir_path = "setup_files"
 
 # ResNet Settings
-img_size = 256
-pooling = "avg"
-num_epochs = 20
+img_size = 512
+pooling = "max"
+num_epochs = 30
 
 # ImageDataGenerator Settings
-batch_size = 128
+batch_size = 64
 
 # NearestNeighbors Settings
 algorithm_for_NN = "ball_tree"
-metric_for_NN = "euclidean"
+metric_for_NN = "manhattan"
 
 """
 SCRIPT

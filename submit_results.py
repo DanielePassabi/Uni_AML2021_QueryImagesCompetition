@@ -9,13 +9,13 @@ import time
 SETTINGS
 """
 #%%
-results_path = 'tools/model_evaluation/test_11_final_test_venv'
+results_path = 'tools/model_evaluation/test_12'
 
 url_unitn_vpn = "http://kamino.disi.unitn.it:3001/results/"
 url_aws_test = "http://ec2-18-191-24-254.us-east-2.compute.amazonaws.com/test/"
 url_aws_results = "http://ec2-18-191-24-254.us-east-2.compute.amazonaws.com/results/"
-
-url_chosen = url_aws_test
+url_aws_competition = "http://ec2-18-191-24-254.us-east-2.compute.amazonaws.com/competition/"
+url_chosen = url_aws_competition
 
 """
 FUNCTIONS
